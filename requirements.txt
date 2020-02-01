@@ -1,0 +1,7 @@
+flask
+requests
+humanize
+bbcode
+Pillow
+piexif
+uwsgi

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Directory Listing - /{{folderpath}}</title>
+
+	<meta charset="utf-8" />
+	<link rel="shortcut icon" href="favicon.ico" />
+
+	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
+	<link href="/static/css/dir.css" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<h1 style="text-align:center;" id="header">Directory Listing - /{{folderpath}}</h1>
+
+		<div id="breadcrumb">
+			<ul class="breadcrumb well well-sm">
+				<li><a href="/">Root</a></li>
+				{% if folderpath %}
+				{% for folder in folders %}
+				<li class="active">{{folder}}</li>
+				{% endfor %}
+				{% endif %}
+			</ul>
+		</div>
+
+		{% if folder_list %}
+		<section>
+			<div id="0" class="panel panel-warning">
+				<div class="panel-heading">
+					<h3 class="panel-title">Folders ({{foldercount}})</h3>
+				</div>
+				<div id="0-b" class="panel-body">
+					{% for folder in folder_list %}
+					<div class="row item" id="{{folder[0]}}">
+						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-folder" aria-hidden="true"></i></div>
+						<div class="col-md-7 col-sm-9 col-xs-5"><a href="?f={{foldersel}}{{folder[1]}};" data-parent="0">{{folder[1]}}</a></div>
+						<div class="col-md-1 col-sm-2 col-xs-4">Folder</div>
+						<div class="col-md-3 hidden-sm hidden-xs"><time datetime="{{folder[0]}}">{{human_date(folder[0])}}</time></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+
+		{% if image_list %}
+		<section>
+			<div id="1" class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Images ({{imagecount}})</h3>
+				</div>
+				<div id="0-b" class="panel-body">
+					{% for image in image_list %}
+					<div class="image item">
+						<a href="{{fileurl}}{{image[2]}}" target="_blank">
+							<div class="imgbox"><img src="{{thumburl}}{{image[3]}}.png" width=160 height=90 alt=""></div>
+						</a>
+						{{image[2]}}
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+
+		{% if file_list %}
+		<section>
+			<div id="2" class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Files ({{filecount}})</h3>
+				</div>
+				<div id="2-b" class="panel-body">
+					{% for file in file_list %}
+					<div class="row item" id="{{file[0]}}">
+						<div class="col-md-1 col-sm-1 col-xs-1">
+							{{file[3]|safe}}
+						</div>
+						<div class="col-md-7 col-sm-9 col-xs-5">
+							<a href="{{fileurl}}{{file[2]}}" data-parent="2" target="_blank">{{file[2]}}</a>
+						</div>
+						<div class="col-md-1 col-sm-2 col-xs-4">{{human_size(file[1])}}</div>
+						<div class="col-md-3 hidden-sm hidden-xs"><time datetime="{{file[0]}}">{{human_date(file[0])}}</time></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</section>
+		{% endif %}
+	</div>
+	<div id="footer">
+		<span class="container"></span>
+	</div>
+	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+		<h1 hidden="">Navigation Bar</h1>
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">Back to Root</a>
+		</div>
+		<div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
+			<ul class="nav navbar-nav">
+				<li><a href="#0">Folders <span class="itemcount label label-warning" data-count="{{foldercount}}">{{foldercount}}</span></a></li>
+				<li><a href="#1">Images <span class="itemcount label label-success" data-count="{{imagecount}}">{{imagecount}}</span></a></li>
+				<li><a href="#2">Files <span class="itemcount label label-default" data-count="{{filecount}}">{{filecount}}</span></a></li>
+			</ul>
+		</div>
+	</nav>
+	<script src="/static/js/jquery-3.1.1.min.js"></script>
+	<script src="/static/js/bootstrap.min.js"></script>
+</body>
+</html>
