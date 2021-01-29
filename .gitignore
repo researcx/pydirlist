@@ -1,6 +1,6 @@
 # User-uploaded files, emoticons, image thumbnails
-/keiDirList/static/.thumbnails/*
-/keiDirList/static/files/*
+/pydirlist/static/.thumbnails/*
+/pydirlist/static/files/*
 
 #Logs
 /logs/*

@@ -37,7 +37,11 @@
 					{% for folder in folder_list %}
 					<div class="row item" id="{{folder[0]}}">
 						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-folder" aria-hidden="true"></i></div>
+						{% if folder[2] == True %}
+							<div class="col-md-7 col-sm-9 col-xs-5"><a href="/{{folder[1]}}" data-parent="0">{{folder[1]}}</a></div>
+						{% else %}
 						<div class="col-md-7 col-sm-9 col-xs-5"><a href="?f={{foldersel}}{{folder[1]}};" data-parent="0">{{folder[1]}}</a></div>
+						{% endif %}
 						<div class="col-md-1 col-sm-2 col-xs-4">Folder</div>
 						<div class="col-md-3 hidden-sm hidden-xs"><time datetime="{{folder[0]}}">{{human_date(folder[0])}}</time></div>
 					</div>
@@ -97,7 +101,7 @@
 	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 		<h1 hidden="">Navigation Bar</h1>
 		<div class="navbar-header">
-			<a class="navbar-brand" href="/">Back to Root</a>
+			<a class="navbar-brand" href="/">Back to /</a>
 		</div>
 		<div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
 			<ul class="nav navbar-nav">

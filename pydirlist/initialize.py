@@ -1,20 +1,14 @@
-#
-# Copyright (c) 2020 by unendingPattern (https://unendingpattern.github.io). All Rights Reserved.
-# You may use, distribute and modify this code under WTFPL.
-# The full license is included in LICENSE.md, which is distributed as part of this project.
-#
-
-import keiDirList, logging
+import pydirlist, logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask, request, jsonify
 from time import strftime
 import traceback
 
 # Core
-import keiDirList.views.dir
+import pydirlist.views.dir
 
 # Error Logging
-if keiDirList.app.debug:
+if pydirlist.app.debug:
     error_log = "logs/error.log"
     access_log = "logs/access.log"
 
@@ -35,7 +29,7 @@ if keiDirList.app.debug:
     logger.addHandler(fileHandler)
     logger.addHandler(streamHandler)
 
-    @keiDirList.app.after_request
+    @pydirlist.app.after_request
     def after_request(response):
         timestamp = strftime('%Y-%b-%d %H:%M:%S')
         useragent = request.user_agent
@@ -44,7 +38,7 @@ if keiDirList.app.debug:
             request.scheme, request.full_path, response.status, request.referrer)
         return response
 
-    @keiDirList.app.errorhandler(Exception)
+    @pydirlist.app.errorhandler(Exception)
     def exceptions(e):
         tb = traceback.format_exc()
         timestamp = strftime('[%Y-%b-%d %H:%M]')
@@ -55,8 +49,8 @@ if keiDirList.app.debug:
 
 #Run the main app...
 if __name__ == '__main__':
-    keiDirList.app.run(threaded=True)
+    pydirlist.app.run(threaded=True)
 
 #Run the main app...
 if __name__ == '__main__':
-    keiDirList.app.run()
+    pydirlist.app.run()
