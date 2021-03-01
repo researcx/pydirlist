@@ -1,0 +1,9 @@
+{
+	"server": {
+		"secret": "INVALID"
+	},
+	"site": {
+		"banners": [""],
+                "footers": ["<!--<div style=\"padding-bottom: 50px; margin-top: -20px !important; font-size: 10px; width:127px; margin: 0 auto; font-style: italic; text-transform: initial;\">pydirlist 0.4</div>-->"]
+    }
+}

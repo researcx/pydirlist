@@ -1,0 +1,19 @@
+  .imgbox, .imgbox img{
+    display: none !important;
+    visibility: hidden !important;
+  }
+  .imgbox-full, .imgbox-full img{
+    display: block !important;
+    visibility: visible !important;
+  }
+  .image, .imgbox-full img{
+    width: unset !important;
+    height: auto !important;
+    max-width: 256px;
+  }
+  .image{
+    display: block !important;
+  }
+.file-name a, .folder-name a{
+font-size: 18px !important;
+}

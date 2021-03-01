@@ -1,6 +1,7 @@
 # User-uploaded files, emoticons, image thumbnails
 /pydirlist/static/.thumbnails/*
 /pydirlist/static/files/*
+nohup.out
 
 #Logs
 /logs/*

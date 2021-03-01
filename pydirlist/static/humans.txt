@@ -1,1 +1,0 @@
-pydirlist (github.com/unendingPattern/pydirlist) by unendingPattern (github.com/unendingPattern)

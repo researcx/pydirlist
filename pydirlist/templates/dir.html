@@ -5,25 +5,29 @@
 	<title>Directory Listing - /{{folderpath}}</title>
 
 	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<link rel="shortcut icon" href="favicon.ico" />
 
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/static/css/font-awesome.min.css" rel="stylesheet">
 	<link href="/static/css/dir.css" rel="stylesheet">
+	{% if is_gallery %}
+	<link href="/static/css/dir_gallery.css" rel="stylesheet">
+	{% endif %}
+
 </head>
 
 <body>
-	<div class="container">
+	<div class="container-fluid">
 		<h1 style="text-align:center;" id="header">Directory Listing - /{{folderpath}}</h1>
+
+		<center>{{get_banner()|safe}}</center>
 
 		<div id="breadcrumb">
 			<ul class="breadcrumb well well-sm">
 				<li><a href="/">Root</a></li>
-				{% if folderpath %}
-				{% for folder in folders %}
-				<li class="active">{{folder}}</li>
-				{% endfor %}
-				{% endif %}
+				{{breadcrumbs|safe}}
 			</ul>
 		</div>
 
@@ -31,19 +35,18 @@
 		<section>
 			<div id="0" class="panel panel-warning">
 				<div class="panel-heading">
-					<h3 class="panel-title">Folders ({{foldercount}})</h3>
+					<h3 class="panel-title"><a href="/xml?f={{foldersel}}&folders=1&count=128" style="float:right;"><i class="fa fa-rss" aria-hidden="true" title="RSS"></i></a>Folders ({{foldercount}})</h3>
 				</div>
 				<div id="0-b" class="panel-body">
 					{% for folder in folder_list %}
 					<div class="row item" id="{{folder[0]}}">
-						<div class="col-md-1 col-sm-1 col-xs-1"><i class="fa fa-folder" aria-hidden="true"></i></div>
-						{% if folder[2] == True %}
-							<div class="col-md-7 col-sm-9 col-xs-5"><a href="/{{folder[1]}}" data-parent="0">{{folder[1]}}</a></div>
+						{% if folder[2] != False %}
+							<div class="col-md-8 col-sm-10 col-xs-8 folder-name"><i class="fa fa-folder folder-icon" aria-hidden="true"></i> <a href="/{{folder[1]}}" data-parent="0">{{folder[1]}}</a></div>
 						{% else %}
-						<div class="col-md-7 col-sm-9 col-xs-5"><a href="?f={{foldersel}}{{folder[1]}};" data-parent="0">{{folder[1]}}</a></div>
+							<div class="col-md-8 col-sm-10 col-xs-8 folder-name"><i class="fa fa-folder folder-icon" aria-hidden="true"></i> <a href="?f={{foldersel}}{{folder[1]}};" data-parent="0">{{folder[1]}}</a></div>
 						{% endif %}
-						<div class="col-md-1 col-sm-2 col-xs-4">Folder</div>
-						<div class="col-md-3 hidden-sm hidden-xs"><time datetime="{{folder[0]}}">{{human_date(folder[0])}}</time></div>
+						<div class="col-md-1 col-sm-2 col-xs-4 folder-type"></div>
+						<div class="col-md-3 folder-date"><time datetime="{{folder[0]}}">{{recent_date(folder[0])}}</time></div>
 					</div>
 					{% endfor %}
 				</div>
@@ -55,15 +58,28 @@
 		<section>
 			<div id="1" class="panel panel-success">
 				<div class="panel-heading">
-					<h3 class="panel-title">Images ({{imagecount}})</h3>
+				  <h3 class="panel-title">
+						<a href="/xml?f={{foldersel}}&files=1&count=128" style="float:right;"><i class="fa fa-rss" aria-hidden="true" title="RSS"></i></a>
+                                                {% if is_gallery %}
+						<a href="/?f={{foldersel}}" style="float:right;"><i class="fa fa-list-alt" aria-hidden="true" title="Gallery" style="margin-right:6px;"></i></a>&nbsp;
+						{% else %}
+						<a href="/?f={{foldersel}}&gallery=1" style="float:right;"><i class="fa fa-image" aria-hidden="true" title="Image List" style="margin-right:6px;"></i></a>&nbsp;
+						{% endif %}
+						Images ({{imagecount}})
+					</h3>
 				</div>
-				<div id="0-b" class="panel-body">
+				<div id="0-b" class="panel-body panel-images">
 					{% for image in image_list %}
 					<div class="image item">
 						<a href="{{fileurl}}{{image[2]}}" target="_blank">
-							<div class="imgbox"><img src="{{thumburl}}{{image[3]}}.png" width=160 height=90 alt=""></div>
+							<div class="imgbox"><img src="{{image[3]}}-150.jpg" loading="lazy" width=160 height=160 alt=""></div>
+							{% if is_gallery %}
+							<div class="imgbox-full"><img src="{{image[3]}}-720.jpg" loading="lazy" alt=""></div>
+							{% else %}
+							<div class="imgbox-full"><img src="{{image[3]}}-720.jpg" loading="lazy" alt=""></div>
+							{% endif %}
 						</a>
-						{{image[2]}}
+						<span title="{{image[2]}}">{{shorten_text(image[2], 20)}}</span>
 					</div>
 					{% endfor %}
 				</div>
@@ -75,19 +91,20 @@
 		<section>
 			<div id="2" class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Files ({{filecount}})</h3>
+					<h3 class="panel-title"><a href="/xml?f={{foldersel}}&files=1&count=128" style="float:right;"><i class="fa fa-rss" aria-hidden="true" title="RSS"></i></a>Files ({{filecount}})</h3>
 				</div>
 				<div id="2-b" class="panel-body">
 					{% for file in file_list %}
 					<div class="row item" id="{{file[0]}}">
-						<div class="col-md-1 col-sm-1 col-xs-1">
-							{{file[3]|safe}}
+						<div class="col-md-8 col-sm-10 col-xs-8 file-name">
+							{% if file[4] != "" %}
+								{{file[3]|safe}} <a href="{{file[4]}}" data-parent="2" target="_blank" title="{{file[4]}}">{{shorten_text(file[2], 25)}}</a>
+							{% else %}
+								{{file[3]|safe}} <a href="{{fileurl}}{{file[2]}}" data-parent="2" target="_blank" title="{{file[2]}}">{{shorten_text(file[2], 25)}}</a>
+							{% endif %}
 						</div>
-						<div class="col-md-7 col-sm-9 col-xs-5">
-							<a href="{{fileurl}}{{file[2]}}" data-parent="2" target="_blank">{{file[2]}}</a>
-						</div>
-						<div class="col-md-1 col-sm-2 col-xs-4">{{human_size(file[1])}}</div>
-						<div class="col-md-3 hidden-sm hidden-xs"><time datetime="{{file[0]}}">{{human_date(file[0])}}</time></div>
+						<div class="col-md-1 col-sm-2 col-xs-4 file-date"></div>
+						<div class="col-md-3 file-size">{% if file[4] != "" %} {% else %} {{human_size(file[1])}} {% endif %}</div>
 					</div>
 					{% endfor %}
 				</div>
@@ -96,15 +113,13 @@
 		{% endif %}
 	</div>
 	<div id="footer">
-		<span class="container"></span>
+		<span class="container">{{get_footer()|safe}}</span>
 	</div>
 	<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 		<h1 hidden="">Navigation Bar</h1>
-		<div class="navbar-header">
-			<a class="navbar-brand" href="/">Back to /</a>
-		</div>
-		<div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
+		<div">
 			<ul class="nav navbar-nav">
+				<li><a class="navbar-brand" href="/">Back to /</a></li>
 				<li><a href="#0">Folders <span class="itemcount label label-warning" data-count="{{foldercount}}">{{foldercount}}</span></a></li>
 				<li><a href="#1">Images <span class="itemcount label label-success" data-count="{{imagecount}}">{{imagecount}}</span></a></li>
 				<li><a href="#2">Files <span class="itemcount label label-default" data-count="{{filecount}}">{{filecount}}</span></a></li>

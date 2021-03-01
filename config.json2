@@ -1,0 +1,9 @@
+{
+	"server": {
+		"secret": "INVALID"
+	},
+	"site": {
+		"banners": ["<a href=\"#\"><img src=\"https://i.imgur.com/zy1mJ91.gif\" class=\"banner\"/></a>"],
+                "footers": ["<div style=\"padding-bottom: 50px; margin-top: -20px !important; font-size: 10px; width:400px; margin: 0 auto; font-style: italic; text-transform: initial;\">May your presence dominate a room, your body language leak exquisitely with confidence, your smile be a contagious outlet for positivity, your cunningness be as sharp as a blade, your ambition unmatchable, your hunger for power insatiable, your boldness magnetic, your charm blinding, your knowledge illuminating, and your attitude fearless.</div>"]
+    }
+}

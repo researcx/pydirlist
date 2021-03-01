@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+	<channel>
+	<title>Directory Listing</title>
+	<description>/{{folderpath}}</description>
+	<link>https://research.medicide.ch/{{folderpath}}</link>
+	<guid isPermaLink="false">{{latest_file[0]}}</guid>
+	<lastBuildDate>{{human_date(latest_file[0])}}</lastBuildDate>
+	<pubDate>{{human_date(latest_file[0])}}</pubDate>
+
+	{% if folder_list %}
+		{% for folder in folder_list %}
+			<item>
+				<title>New files in /{{folder[1]}}! ({{recent_date(folder[0])}})</title>
+				<description>Folder</description>
+				{% if folder[2] == True %}
+					<link>https://research.medicide.ch/{{folder[1]}}</link>
+				{% else %}
+					<link>https://research.medicide.ch/?f={{foldersel}}{{folder[1]}};</link>
+				{% endif %}
+				<guid isPermaLink="false">{{folder[0]}}</guid>
+				<pubDate>{{human_date(folder[0])}}</pubDate>
+			</item>
+		{% endfor %}
+	{% endif %}
+
+	{% if image_list %}
+		{% for image in image_list %}
+			<item>
+				<title>{{image[2]}}</title>
+				<description>{{human_size(image[1])}}</description>
+				<link>{{fileurl}}{{image[2]}}</link>
+				<guid isPermaLink="false">{{image[0]}}</guid>
+				<pubDate>{{image[0]}}</pubDate>
+			</item>
+		{% endfor %}
+	{% endif %}
+
+	{% if file_list %}
+		{% for file in file_list %}
+			<item>
+				<title>New files in /{{folderpath}}! ( https://research.medicide.ch/?f={{foldersel}} )</title>
+				<description>{{human_size(file[1])}}</description>
+				<link>{{fileurl}}{{file[2]}}</link>
+				<guid isPermaLink="false">{{file[0]}}</guid>
+				<pubDate>{{human_date(file[0])}}</pubDate>
+			</item>
+		{% endfor %}
+	{% endif %}
+</channel>
+</rss>

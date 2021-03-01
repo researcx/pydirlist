@@ -6,6 +6,7 @@ import traceback
 
 # Core
 import pydirlist.views.dir
+import pydirlist.views.xml
 
 # Error Logging
 if pydirlist.app.debug:

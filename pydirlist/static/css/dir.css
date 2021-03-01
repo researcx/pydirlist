@@ -3,6 +3,7 @@ html, body{
   font-size: 13px;
   color: #333;
   background-color: #fff;
+  text-transform: lowercase;
 }
 a {
   color: #444;
@@ -11,15 +12,36 @@ a {
 a:hover, a:active {
   color: #666;
 }
+.active a{
+  color: #666 !important;
+}
+time, .file-size{
+  float: right;
+  text-align: right;
+}
+.banner {
+    width: 300px;
+    height: 100px;
+    margin-bottom: 20px;
+    border: 1px solid #facccc;
+}
 .image{
-  font-size: 6px;
-  width: 200px;
-  height: 130px;
+  font-size: 11px;
+  width: 170px;
+  height: 180px;
   float: left;
   text-align: center;
   border: 0;
   overflow: visible;
   padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.panel-images{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 .image img{
   border: 1px solid #000;
@@ -59,3 +81,63 @@ a:hover, a:active {
   display: inline;
   padding: 0.2em 0.6em .1em;
 }
+
+
+.file-icon, .folder-icon {
+    padding-right: 9px;
+}
+
+.imgbox, .imgbox img{
+  display: block;
+  visibility: visible;
+}
+.imgbox-full, imgbox-full img{
+  display: none;
+  visibility: hidden;
+}
+
+ @media only screen and (max-width: 500px) {
+  .imgbox, .imgbox img{
+    display: none;
+    visibility: hidden;
+  }
+  .imgbox-full, .imgbox-full img{
+    display: block;
+    visibility: visible;
+  }
+  .image, .imgbox-full img{
+    width: 100%;
+    height: unset;
+  }
+  .image{
+    display: block;
+  }
+.file-name a, .folder-name a{
+font-size: 18px;
+}
+.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {
+    max-height: 340px;
+    margin-top: -51px !important;
+}
+}
+.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse, .navbar-static-top .navbar-collapse {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}
+.navbar-collapse.collapse {
+    display: block !important;
+    height: auto !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+}
+.collapse{
+    display: block !important;
+}
+.navbar-nav > li {
+    float: left !important;
+}
+.navbar-nav {
+    float: left !important;
+    margin: 0 !important;
+}
+
