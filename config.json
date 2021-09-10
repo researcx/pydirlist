@@ -3,7 +3,7 @@
 		"secret": "INVALID"
 	},
 	"site": {
-		"banners": [""],
-                "footers": ["<!--<div style=\"padding-bottom: 50px; margin-top: -20px !important; font-size: 10px; width:127px; margin: 0 auto; font-style: italic; text-transform: initial;\">pydirlist 0.4</div>-->"]
+		"banners": ["<br/><!--<a href=\"https://xch.fairuse.org/\" target=\"_blank\"><img src=\"https://research.medicide.ch/static/files/Development/xchx.png\" class=\"banner\"/></a>-->"],
+                "footers": ["<div style=\"text-align: center; padding-bottom: 50px; margin-top: -20px !important; font-size: 24px; width:300px; margin: 0 auto; font-style: initial; text-transform: initial;\"><img src=\"https://research.medicide.ch/static/files/Documents/research-medicide-ch.png\"><br/><a href=\"https://linktr.ee/keitree\" target=\"_blank\"><i aria-hidden=\"true\" class=\"fa fa-heart\" style=\"color: #bb2828; border-bottom: 1px dotted #4d4a4a;\"></i></a></div>"]
     }
 }

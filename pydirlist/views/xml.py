@@ -13,6 +13,7 @@ def xmlview():
     breadcrumbs = ""
     is_active = ''
     full_path = ""
+    hidden_folders = [".", "NSFW", "Avatars", "Lewd"]
     if folder and folder[:1] is not ".":
         folders = folder.split(";")
         while("" in folders): 
@@ -36,6 +37,7 @@ def xmlview():
     text_types = [".txt",".pdf",".doc"]
     archive_types = [".zip",".rar",".7z",".tar",".gz"]
     link_types = [".link", ".url", ".goto", ".shortcut"]
+    tmp_types = [".tmp"]
 
     fileurl = pydirlist.request.url_root + "static/files/" + folderpath
     thumburl = pydirlist.request.url_root + "static/.thumbnails/"
@@ -53,7 +55,8 @@ def xmlview():
                 if "_goto_" in fn:
                     is_goto = True
                     fn = fn.replace('_goto_', '')
-                folder_list.append([filetime, fn, is_goto])
+                if fn not in hidden_folders:
+                    folder_list.append([filetime, fn, is_goto])
         if (pydirlist.request.args.get('files', '') != "") and (pydirlist.os.path.isfile(filepath) and fn[-1] is not "~"):
             filetime = int(pydirlist.os.stat(filepath).st_mtime)
             filesize = pydirlist.os.path.getsize(filepath)
@@ -69,8 +72,9 @@ def xmlview():
                 f.close()
             else:
                 if extension not in link_types:
-                  type_icon = '<i class="fa fa-file-o file-icon" aria-hidden="true"></i>'
-                  file_list.append([filetime, filesize, fn, type_icon, ""])
+                     if extension not in tmp_types:
+                         type_icon = '<i class="fa fa-file-o file-icon" aria-hidden="true"></i>'
+                         file_list.append([filetime, filesize, fn, type_icon, ""])
 
     count = int(pydirlist.request.args.get('count', ''))
 

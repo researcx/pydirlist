@@ -20,16 +20,39 @@
 
 <body>
 	<div class="container-fluid">
-		<h1 style="text-align:center;" id="header">Directory Listing - /{{folderpath}}</h1>
-
 		<center>{{get_banner()|safe}}</center>
-
+		<h1 style="text-align: center;" id="header">Directory Listing - /{{folderpath}}</h1>
 		<div id="breadcrumb">
 			<ul class="breadcrumb well well-sm">
 				<li><a href="/">Root</a></li>
 				{{breadcrumbs|safe}}
 			</ul>
 		</div>
+
+                {% if file_list and foldersel == "" %}
+                <section>
+                        <div id="2" class="panel panel-default">
+                                <div class="panel-heading">
+                                        <h3 class="panel-title"><a href="/xml?f={{foldersel}}&files=1&count=128" style="float:right;"><i class="fa fa-rss" aria-hidden="true" title="RSS"></i></a>Files ({{filecount}})</h3>
+                                </div>
+                                <div id="2-b" class="panel-body">
+                                        {% for file in file_list %}
+                                        <div class="row item" id="{{file[0]}}">
+                                                <div class="col-md-8 col-sm-10 col-xs-8 file-name">
+                                                        {% if file[4] != "" %}
+                                                                {{file[3]|safe}} <a href="{{file[4]}}" data-parent="2" target="_blank" title="{{file[4]}}">{{shorten_text(file[2], 25)}}</a>
+                                                        {% else %}
+                                                                {{file[3]|safe}} <a href="{{fileurl}}{{file[2]}}" data-parent="2" target="_blank" title="{{file[2]}}">{{shorten_text(file[2], 25)}}</a>
+                                                        {% endif %}
+                                                </div>
+                                                <div class="col-md-1 col-sm-2 col-xs-4 file-date"></div>
+                                                <div class="col-md-3 file-size">{% if file[4] != "" %} {% else %} {{human_size(file[1])}} {% endif %}</div>
+                                        </div>
+                                        {% endfor %}
+                                </div>
+                        </div>
+                </section>
+                {% endif %}
 
 		{% if folder_list %}
 		<section>
@@ -71,7 +94,7 @@
 				<div id="0-b" class="panel-body panel-images">
 					{% for image in image_list %}
 					<div class="image item">
-						<a href="{{fileurl}}{{image[2]}}" target="_blank">
+						<a href="{{image[3]}}-1600.jpg" target="_blank">
 							<div class="imgbox"><img src="{{image[3]}}-150.jpg" loading="lazy" width=160 height=160 alt=""></div>
 							{% if is_gallery %}
 							<div class="imgbox-full"><img src="{{image[3]}}-720.jpg" loading="lazy" alt=""></div>
@@ -79,7 +102,7 @@
 							<div class="imgbox-full"><img src="{{image[3]}}-720.jpg" loading="lazy" alt=""></div>
 							{% endif %}
 						</a>
-						<span title="{{image[2]}}">{{shorten_text(image[2], 20)}}</span>
+						<span title="{{image[3]}}-1600.jpg">{{shorten_text(image[3] + "-1600.jpg", 20)}}</span>
 					</div>
 					{% endfor %}
 				</div>
@@ -87,7 +110,7 @@
 		</section>
 		{% endif %}
 
-		{% if file_list %}
+		{% if file_list and foldersel != "" %}
 		<section>
 			<div id="2" class="panel panel-default">
 				<div class="panel-heading">

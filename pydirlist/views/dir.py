@@ -16,9 +16,11 @@ def dirview():
     foldersel = ""
     folderpath = ""
     is_gallery = True if pydirlist.request.args.get('gallery', '') != "" else False
+    show_all = True if pydirlist.request.args.get('all', '') != "" else False
     breadcrumbs = ""
     is_active = ''
     full_path = ""
+    hidden_folders = [".", "NSFW", 'Avatars', "Lewd"]
     if folder and folder[:1] is not ".":
         folders = folder.split(";")
         while("" in folders): 
@@ -60,7 +62,10 @@ def dirview():
                 if "_goto_" in fn:
                     is_goto = True
                     fn = fn.replace('_goto_', '')
-                folder_list.append([filetime, fn, is_goto])
+                if show_all:
+                    folder_list.append([filetime, fn, is_goto])
+                elif fn not in hidden_folders:
+                    folder_list.append([filetime, fn, is_goto])
         if pydirlist.os.path.isfile(filepath) and fn[-1] is not "~":
             filetime = int(pydirlist.os.stat(filepath).st_mtime)
             filesize = pydirlist.os.path.getsize(filepath)
