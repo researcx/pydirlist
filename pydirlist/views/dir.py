@@ -20,7 +20,7 @@ def dirview():
     breadcrumbs = ""
     is_active = ''
     full_path = ""
-    hidden_folders = [".", "NSFW", 'Avatars', "Lewd"]
+    hidden_folders = [".", "NSFW"]
     if folder and folder[:1] is not ".":
         folders = folder.split(";")
         while("" in folders): 
